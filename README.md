@@ -1,66 +1,81 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# RadiGuide（ラジガイド）
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## 概要
 
-## About Laravel
+放射線技師として医療現場で勤務した経験をもとに設計・開発した、患者向け放射線検査説明Webアプリケーション。
+検査前の準備・検査の流れ・よくある質問をわかりやすくまとめることができ、患者が安心して検査を受けられるよう支援します。
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 使用技術
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+PHP：8.3
+Laravel：11
+MySQL：8.4
+TailwindCSS：3系
+Docker / Laravel Sail
 
-## Learning Laravel
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## 機能一覧
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+### 一般ユーザー向け（ログイン不要）
+- トップページ（カテゴリ別検査一覧・検索）
+- 検査一覧・キーワード検索・カテゴリ絞り込み
+- 検査詳細ページ（概要・目的・流れ・注意事項）
+- 検査前チェックリスト表示
+- よくある質問（全般FAQ・検査別FAQ）
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+### 管理者向け（ログイン必要）
+- カテゴリ管理（CRUD）
+- 検査記事管理（CRUD・公開/非公開管理）
+- チェックリスト管理（CRUD・必須/任意設定）
+- FAQ管理（CRUD・全般/検査別設定）
 
-## Laravel Sponsors
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+## 設計ポイント
 
-### Premium Partners
+### 検査前チェックリストの必須/任意区分
+放射線検査では検査前の準備が重要。
+CT造影剤使用時の絶食・MRIの金属除去など、必須項目と任意項目を色分けして表示し、患者が見落とさないように設計。
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+### 注意事項の強調表示
+造影剤アレルギーなど重要な注意事項は黄色背景で強調表示。
 
-## Contributing
+### FAQ の全般/検査別分類
+「予約方法」などの全般的な質問と「CT検査に痛みはありますか？」などの検査固有の質問を分けて管理・表示。
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+### 工夫した点
+- 管理者側（/admin）と一般ユーザー側をControllerのディレクトリで明確に分離
+- Eloquent のローカルスコープ（'scopePublished'）を活用し、公開済み記事のみを取得するコードを実装。
+- ページネーションに検索条件を引き継ぐ'appends()'を使用。
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## 作者について
+放射線技師として医療現場で勤務した後、Webエンジニアへのキャリアチェンジを目指す。
+医療×ITという専門性を活かし、医療系システムの開発・改善に貢献したい。
 
-## Security Vulnerabilities
+## ローカル環境での起動方法
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+```bash
+# リポジトリのクローン
+git clone https://github.com/masa376/radi-guide.git
+cd radi-guide
 
-## License
+# 環境変数の設定
+cp .env.example .env
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+# Sailの起動
+./vendor/bin/sail up -d
+
+# 依存パッケージのインストール
+./vendor/bin/sail composer install
+
+# アプリケーションキーの生成
+./vendor/bin/sail artisan key:generate
+
+# マイグレーションの実行
+./vendor/bin/sail artisan migrate
+
+# フロントエンドのビルド
+./vendor/bin/sail npm install
+./vendor/bin/sail npm run build
+```
