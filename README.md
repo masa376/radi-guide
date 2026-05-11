@@ -8,11 +8,11 @@
 
 ## 使用技術
 
-PHP：8.3
-Laravel：11
-MySQL：8.4
-TailwindCSS：3系
-Docker / Laravel Sail
+- PHP：8.3
+- Laravel：11
+- MySQL：8.4
+- TailwindCSS：3系
+- Docker / Laravel Sail
 
 
 ## 機能一覧
