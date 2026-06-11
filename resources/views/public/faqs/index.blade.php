@@ -45,11 +45,23 @@
             <h2 class="text-xl font-bold text-gray-900 mb-6 pb-2 border-b border-gray-200">
                 全般的なご質問
             </h2>
-            <div class="space-y-4">
+            <div class="space-y-3">
                 @foreach($generalFaqs as $faq)
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <p class="font-medium text-gray-900">Q. {{ $faq->question }}</p>
-                        <p class="mt-3 text-gray-600 whitespace-pre-line">A. {{ $faq->answer }}</p>
+                    <div x-data="{ open: false }"
+                        class="bg-white rounded-lg shadow-sm overflow-hidden">
+                        <button @click="open = !open"
+                                class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50">
+                            <span class="font-medium text-gray-900">Q. {{ $faq->question }}</span>
+                            <span x-text="open ? '▲' : '▼'"
+                                    class="text-gray-400 text-sm ml-4 flex-shrink-0"></span>
+                        </button>
+                        <div x-show="open"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 transform -translate-y-2"
+                            x-transition:enter-end="opacity-100 transform translate-y-0"
+                            class="px-6 py-4 border-t border-gray-100 bg-gray-50">
+                            <p class="text-gray-600 whitespace-pre-line">A. {{ $faq->answer }}</p>
+                        </div>
                     </div>
                 @endforeach
             </div>
@@ -62,11 +74,23 @@
             <h2 class="text-xl font-bold text-gray-900 mb-6 pb-2 bolder-b border-gray-200">
                 {{ $examination->title }}に関するご質問
             </h2>
-            <div class="space-y-4">
+            <div class="space-y-3">
                 @foreach($examination->faqs as $faq)
-                    <div class="bg-white rounded-lg shadow-sm p-6">
-                        <p class="font-medium text-gray-900">Q. {{ $faq->question }}</p>
-                        <p class="mt-3 text-gray-600 whitespace-pre-line">A. {{ $faq->answer }}</p>
+                    <div x-data="{ open: false }"
+                        class="bg-white rounded-lg shadow-sm overflow-hidden">
+                        <button @click="open = !open"
+                                class="w-full px-6 py-4 text-left flex justify-between items-center hover:bg-gray-50">
+                            <span class="font-medium text-gray-900">Q. {{ $faq->question }}</span>
+                            <span x-text="open ? '▲' : '▼'"
+                                    class="text-gray-400 text-sm ml-4 flex-shrink-0"></span>
+                        </button>
+                        <div x-show="open"
+                            x-transition:enter="transition ease-out duration-200"
+                            x-transition:enter-start="opacity-0 transform -translate-y-2"
+                            x-transition:enter-end="opacity-100 transform translate-y-0"
+                            class="px-6 py-4 border-t border-gray-100 bg-gray-50">
+                            <p class="text-gray-600 whitespace-pre-line">A. {{ $faq->answer }}</p>
+                        </div>
                     </div>
                 @endforeach
             </div>
