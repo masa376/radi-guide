@@ -90,8 +90,78 @@
         <div class="mb-8">
             <span class="text-sm text-blue-600 font-medium">{{ $examination->category->name }}</span>
             <h1 class="mt-2 text-3xl font-bold text-gray-900">{{ $examination->title }}</h1>
+
+            {{-- 所要時間タイムライン --}}
             @if($examination->duration)
-                <p class="mt-2 text-gray-500">🕛 所要時間：約{{ $examination->duration }}分</p>
+            <div class="bg-white rounded-lg shadow-sm p-6 mb-6">
+                <h2 class="text-lg font-semibold text-gray-900 mb-4">
+                    🕒 所要時間の目安：約{{ $examination->duration }}分
+                </h2>
+
+                {{-- プログレスバー --}}
+                <div class="mb-6">
+                    <div class="w-full bg-gray-200 rounded-full h-3">
+                        <div class="bg-blue-600 h-3 rounded-full"
+                            style="width: 100%"></div>
+                    </div>
+                    <div class="flex justify-between text-xs text-gray-500 mt-1">
+                        <span>開始</span>
+                        <span>{{ $examination->duration }}分後</span>
+                    </div>
+                </div>
+
+                {{-- タイムライン --}}
+                <div class="relative">
+                    {{-- 縦線 --}}
+                    <div class="absolute left-4 top-0 bottom-0 w-0.5 bg-blue-200"></div>
+
+                    <div class="space-y-4">
+                        {{-- 受付・問診 --}}
+                        <div class="flex items-start gap-4 relative">
+                            <div class="w-8 h-8 bg-blue-600 rounded-full flex items-center justify-center flex-shrink-0 z-10">
+                                <span class="text-white text-xs font-bold">1</span>
+                            </div>
+                            <div class="bg-blue-50 rounded-lg p-3 flex-1">
+                                <p class="font-medium text-gray-900 text-sm">受付・問診票記入</p>
+                                <p class="text-xs text-gray-500 mt-1">0分～</p>
+                            </div>
+                        </div>
+
+                        {{-- 準備 --}}
+                        <div class="flex items-start gap-4 relative">
+                            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 z-10">
+                                <span class="text-white text-xs font-bold">2</span>
+                            </div>
+                            <div class="bg-blue-50 rounded-lg p-3 flex-1">
+                                <p class="font-medium text-gray-900 text-sm">更衣・検査準備</p>
+                                <p class="text-xs text-gray-500 mt-1">約{{ round($examination->duration * 0.15) }}分～</p>
+                            </div>
+                        </div>
+
+                        {{-- 検査 --}}
+                        <div class="flex items-start gap-4 relative">
+                            <div class="w-8 h-8 bg-blue-400 rounded-full flex items-center justify-center flex-shrink-0 z-10">
+                                <span class="text-white text-xs font-bold">3</span>
+                            </div>
+                            <div class="bg-blue-50 rounded-lg p-3 flex-1">
+                                <p class="font-medium text-gray-900 text-sm">検査実施</p>
+                                <p class="text-xs text-gray-500 mt-1">約{{ round($examination->duration * 0.3) }}分～</p>
+                            </div>
+                        </div>
+
+                        {{-- 終了 --}}
+                        <div class="flex items-start gap-4 relative">
+                            <div class="w-8 h-8 bg-blue-500 rounded-full flex items-center justify-center flex-shrink-0 z-10">
+                                <span class="text-white text-xs font-bold">✓</span>
+                            </div>
+                            <div class="bg-blue-50 rounded-lg p-3 flex-1">
+                                <p class="font-medium text-gray-900 text-sm">検査終了・着替え</p>
+                                <p class="text-xs text-gray-500 mt-1">約{{ round($examination->duration * 0.85) }}分～</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @endif
         </div>
 
