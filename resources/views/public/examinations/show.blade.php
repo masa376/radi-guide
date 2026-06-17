@@ -268,6 +268,11 @@
                 class="px-6 py-3 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
                 検査一覧に戻る
             </a>
+            <a href="{{ route('examinations.print', $examination->slug) }}"
+                target="_blank"
+                class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
+                🖨️ 印刷する
+            </a>
             <a href="{{ route('faqs.index') }}"
                 class="px-6 py-3 bg-gray-200 text-gray-700 rounded-lg hover:bg-gray-300">
                 よくある質問を見る

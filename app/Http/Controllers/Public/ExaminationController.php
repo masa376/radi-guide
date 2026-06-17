@@ -51,4 +51,16 @@ class ExaminationController extends Controller
 
         return view('public.examinations.show', compact('examination'));
     }
+
+
+    // 印刷用ページ
+    public function print(string $slug)
+    {
+        $examination = Examination::published()
+            ->with(['category', 'checklists', 'faqs'])
+            ->where('slug', $slug)
+            ->firstOrFail();
+
+        return view('public.examinations.print', compact('examination'));
+    }
 }

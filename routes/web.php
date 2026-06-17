@@ -19,6 +19,9 @@ Route::get('/examinations/{slug}', [PublicController\ExaminationController::clas
 Route::get('/faqs', [PublicController\FaqController::class, 'index'])
     ->name('faqs.index');
 
+Route::get('/examinations/{slug}/print', [PublicController\ExaminationController::class, 'print'])
+    ->name('examinations.print');
+
 
 // ==========================
 // 管理者側ルート
