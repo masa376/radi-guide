@@ -9,6 +9,7 @@ export default defineConfig({
                 'resources/css/app.css',
                 'resources/js/app.js',
                 'resources/tsx/search.tsx',
+                'resources/tsx/checklist.tsx',
             ],
             refresh: true,
         }),

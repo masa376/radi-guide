@@ -197,54 +197,11 @@
 
         {{-- 検査前チェックリスト --}}
         @if($examination->checklists->count() > 0)
-        <div class="bg-white rounded-lg shadow-sm p-6 mb-6"
-            x-data="{
-                items: {{ $examination->checklists->map(fn($c) => ['id' => $c->id, 'checked' => false])->toJson() }},
-                get allChecked() {
-                    return this.items.every(item => item.checked);
-                },
-                get checkedCount() {
-                    return this.items.filter(item => item.checked).length;
-                }
-            }">
-            <div class="flex justify-between items-center mb-4">
-                <h2 class="text-lg font-semibold text-gray-900">検査前チェックリスト</h2>
-                <span class="text-sm text-gray-500">
-                    <span x-text="checkedCount"></span> / {{ $examination->checklists->count() }} 完了
-                </span>
-            </div>
-
-            {{-- 全完了バッチ --}}
-            <div x-show="allChecked"
-                x-transition
-                class="mb-4 p-3 bg-green-100 border border-green-300 rounded-md text-center">
-                <p class="text-green-700 font-medium">✅ 全ての項目を確認しました！準備完了です。</p>
-            </div>
-
-            {{-- チェックリスト項目 --}}
-            <div class="space-y-3">
-                @foreach($examination->checklists as $index => $checklist)
-                    <div class="flex items-start gap-3 p-3 rounded-md"
-                        :class="items[{{ $index }}].checked ? 'bg-green-50' : 'bg-gray-50'">
-                        <input type="checkbox"
-                                x-model="items[{{ $index }}].checked"
-                                class="mt-0.5 w-5 h-5 rounded border-gray-300 text-green-600 cursor-pointer">
-                        <div class="flex-1">
-                            <div class="flex items-center gap-2">
-                                <span class="px-2 py-0.5 rounded text-xs font-medium 
-                                    {{ $checklist->is_required ? 'bg-red-100 text-red-700' : 'bg-gray-100 text-gray-600' }}">
-                                    {{ $checklist->is_required ? '必須' : '任意' }}
-                                </span>
-                                <p class="text-gray-700"
-                                    :class="items[{{ $index }}].checked ? 'line-through text-gray-400' : ''">
-                                    {{ $checklist->item }}
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                @endforeach
-            </div>
+        <div id="checklist-root"
+            data-items="{{ $examination->checklists->toJson() }}"
+            data-slug="{{ $examination->slug }}">
         </div>
+        @vite('resources/tsx/checklist.tsx')
         @endif
 
         {{-- FAQ --}}
