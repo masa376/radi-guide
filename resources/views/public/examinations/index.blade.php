@@ -39,6 +39,11 @@
                                 class="px-4 py-2 bg-blue-600 text-white rounded hover:bg-blue-700 text-sm">
                                 管理者メニュー
                             </a>
+                        @else
+                            <a href="{{ route('login') }}"
+                                class="px-4 py-2 border border-blue-600 text-blue-600 rounded hover:bg-blue-50 text-sm">
+                                管理者ログイン
+                            </a>
                         @endauth
                     </nav>
 
@@ -60,6 +65,11 @@
                                     class="text-blue-600 hover:text-blue-700 py-2">
                                     管理者メニュー
                                 </a>
+                            @else
+                                <a href="{{ route('login') }}"
+                                    class="px-4 py-2 border border-blue-600 text-blue-600 rounded hover:bg-blue-50 text-sm">
+                                    管理者ログイン
+                            </a>
                             @endauth
                         </nav>
                     </div>
